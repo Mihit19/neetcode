@@ -1,0 +1,29 @@
+class Solution {
+    public String signature(String s)
+    {
+        int[] count=new int[26];
+        for (char c: s.toCharArray())
+        {
+            count[c - 'a']++;
+        }
+        StringBuilder t=new StringBuilder();
+        for(int i=0;i<26;i++)
+        {
+            if(count[i]!=0)
+            {
+                t.append((char)('a'+i)).append(count[i]);
+            }
+        }
+        return t.toString();
+    }
+    public List<List<String>> groupAnagrams(String[] strs) {
+        List<List<String>> result=new ArrayList<>();
+        Map<String,List<String>> group=new HashMap<>();
+        for (String s:strs)
+        {
+            group.computeIfAbsent(signature(s),k -> new ArrayList<>()).add(s);
+        }
+        result.addAll(group.values());
+        return result;
+    }
+}
